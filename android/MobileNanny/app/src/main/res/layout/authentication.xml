@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="20dp"
+        android:layout_above="@+id/authentication_title"
+        android:src="@drawable/tracker_icon"
+        android:scaleType="fitCenter"
+        android:contentDescription="@null"/>
+
+    <TextView
+        android:id="@+id/authentication_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_above="@+id/authentication_part"
+        android:layout_margin="20dp"
+        android:gravity="center"
+        android:text="@string/authenticate"
+        android:textSize="18sp"
+        android:textColor="@color/textPrimary"
+        android:minLines="1"/>
+
+    <LinearLayout
+        android:id="@+id/authentication_part"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:orientation="vertical"
+        android:padding="20dp">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/user_name_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:labelFor="@+id/user_name_edittext"
+                android:text="@string/name_label"
+                android:textSize="14sp"
+                android:textColor="@color/textPrimary"
+                android:lines="1"/>
+
+            <EditText
+                android:id="@+id/user_name_edittext"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_centerVertical="true"
+                android:layout_toEndOf="@+id/user_name_label"
+                android:gravity="start|center_vertical"
+                android:inputType="textPersonName"
+                android:textSize="14sp"
+                android:textColor="@color/textPrimary"
+                android:theme="@style/EditTextTheme"
+                android:maxLength="100"/>
+
+            <ImageView
+                android:id="@+id/user_name_error_imageview"
+                android:layout_width="wrap_content"
+                android:layout_height="10dp"
+                android:layout_centerVertical="true"
+                android:layout_alignEnd="@+id/user_name_edittext"
+                android:src="@drawable/error_icon"
+                android:scaleType="fitCenter"
+                android:contentDescription="@null"
+                android:visibility="gone"/>
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/user_password_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:labelFor="@+id/user_password_edittext"
+                android:text="@string/password_label"
+                android:textSize="14sp"
+                android:textColor="@color/textPrimary"
+                android:lines="1"/>
+
+            <EditText
+                android:id="@+id/user_password_edittext"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_centerVertical="true"
+                android:layout_toEndOf="@+id/user_password_label"
+                android:gravity="start|center_vertical"
+                android:inputType="textPassword"
+                android:textSize="14sp"
+                android:textColor="@color/textPrimary"
+                android:theme="@style/EditTextTheme"
+                android:maxLength="100"/>
+
+            <ImageView
+                android:id="@+id/user_password_error_imageview"
+                android:layout_width="wrap_content"
+                android:layout_height="10dp"
+                android:layout_centerVertical="true"
+                android:layout_alignEnd="@+id/user_password_edittext"
+                android:src="@drawable/error_icon"
+                android:scaleType="fitCenter"
+                android:contentDescription="@null"
+                android:visibility="gone"/>
+
+        </RelativeLayout>
+
+    </LinearLayout>
+
+    <ProgressBar
+        android:id="@+id/authenticate_progressbar"
+        android:layout_width="wrap_content"
+        android:layout_height="20dp"
+        android:layout_alignEnd="@+id/authenticate_button"
+        android:layout_alignTop="@+id/authenticate_button"
+        android:layout_marginTop="14dp"
+        android:indeterminate="true"
+        android:visibility="gone"/>
+
+    <Button
+        android:id="@+id/authenticate_button"
+        android:layout_width="130dp"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_margin="20dp"
+        android:layout_below="@+id/authentication_part"
+        android:background="@drawable/button_background"
+        android:text="@string/login"
+        android:textSize="16sp"
+        android:textColor="@drawable/button_text_color"
+        android:onClick="login"/>
+
+</RelativeLayout>

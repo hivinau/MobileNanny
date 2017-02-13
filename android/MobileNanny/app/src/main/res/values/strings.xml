@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">Mobile Nanny</string>
+
+    <string name="authenticate">Identifiez-vous pour utiliser nos services</string>
+    <string name="name_label">Identifiant : </string>
+    <string name="password_label">Mot de passe : </string>
+    <string name="login">login</string>
+</resources>
