@@ -1,0 +1,19 @@
+{
+
+  "name": "mobile_nanny",
+  "version": "1.0.1",
+  "private": true,
+  "scripts": {
+
+    "start": "node ./bin/server.js"
+  },
+
+  "dependencies": {
+
+    "express": "~4.12.4",
+    "ejs": "~2.5.5"
+  },
+
+  "author": "Hivinau GRAFFE",
+  "description": "Mobile Nanny is a child-localized plateform for parents who want to track children using smartphone."
+}
