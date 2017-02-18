@@ -7,7 +7,7 @@ var globals = {
 
         views: 'views'
     },
-    route: {
+    routes: {
         
         root: '/'
     }

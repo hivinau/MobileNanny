@@ -6,13 +6,21 @@ var callbacks = {
     
     throw404Error: function(request, response, next) { //handle error 404
         
-        var error = new Error('Not Found');
+        console.log('sending 404');
+
+        var content = 'Not Found';
+        var error = new Error(content);
         error.status = 404;
         
         next(error); //throw error to page error.ejs
     },
 
     throwError: function(error, request, response, next) {
+
+        if(error) {
+            
+            console.log(error);
+        }
 
         //load page error.ejs
         var file = fs.readFileSync('./views/pages/error.ejs', 'utf8')
