@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<!DOCTYPE resources SYSTEM "../bin/strings.dtd">
+<resources>
+
+    <string name="app_name">Mobile Nanny</string>
+
+</resources>

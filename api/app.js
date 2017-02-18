@@ -1,3 +1,4 @@
+//> npm install ### CLI to install modules
 //> npm start ### CLI to launch app
 
 var globals = require('./models/globals.js');

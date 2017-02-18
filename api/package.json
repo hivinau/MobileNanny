@@ -1,5 +1,4 @@
 {
-
   "name": "mobile_nanny",
   "version": "1.0.1",
   "private": true,
@@ -11,7 +10,8 @@
   "dependencies": {
 
     "express": "~4.12.4",
-    "ejs": "~2.5.5"
+    "ejs": "~2.5.5",
+    "xml2js": "0.4.17"
   },
 
   "author": "Hivinau GRAFFE",

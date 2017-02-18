@@ -1,0 +1,3 @@
+<!ELEMENT resources (string*)>
+<!ELEMENT string (#PCDATA)>
+<!ATTLIST string name CDATA #REQUIRED>
