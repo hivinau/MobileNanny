@@ -1,25 +1,24 @@
-//> npm install ### CLI to install modules
-//> npm start ### CLI to launch app
+//> npm install ### install modules defined on package.json
+//> npm start ### launch app server
 
-var globals = require('./models/globals.js');
-var callbacks = require('./models/callbacks.js');
 var express = require('express');
+
+//middleware to format url basename
 var path = require('path');
-var EventEmitter = require('events').EventEmitter;
+
+//middleware to parse http request format message
+var bodyParser = require('body-parser');
 
 var app = express();
 
-app.set('views', path.join(__dirname, globals.path.views));
-app.set('view engine', 'ejs');
+// parse application/json
+app.use(bodyParser.json());
 
-//tell app that folder 'public' can be opened to client
-app.use('/public', express.static(__dirname + '/public'));
+//all routes are defined on routes.js
+app.use(require(path.join(__dirname, 'routes.js')));
 
-//define routes
-app.use(globals.routes.root, require('./routes/index'));
+//clients can access to 'public' folder
+app.use('/public', express.static(path.join(__dirname, '/public')));
 
-//define error callbacks
-app.use(callbacks.throw404Error);
-app.use(callbacks.throwError);
-
+//set server listener
 module.exports = app;
