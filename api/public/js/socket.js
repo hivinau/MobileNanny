@@ -2,8 +2,8 @@ var socket = null;
 
 var credentials = {
 
-    email: 'hivinau.graffe@hotmail.fr',
-    password: 'tesst'
+    email: 'user@hotmail.fr',
+    password: 'password'
 };
 
 var connectionEstablished = function () {
@@ -22,19 +22,8 @@ var connectionAborted = function () {
     console.log('socket disconnected');
 };
 
-var messageReceived = function (message) {
+var dataAvailable = function (data) {
 
-    //handled when message received
-    if(message.hasOwnProperty('type') && message.hasOwnProperty('content')) {
-
-        switch (message.type) {
-            default: //message is considered as 'error' string
-                break;
-        }
-
-        var content = message.content;
-        console.log(content);
-    }
 
 };
 
@@ -42,6 +31,7 @@ var credentialsAccepted = function () {
 
     //handled when server accepts user credentials
 
+    console.log('authenticated');
     console.log('ask server to list phones registered');
 
     var parameters = JSON.stringify({ email: credentials.email, password: credentials.password });
@@ -80,13 +70,20 @@ var credentialsAccepted = function () {
     })
 };
 
+var credentialsRefused = function (message) {
+
+    //handled when message received
+    console.log(message);
+};
+
 window.onload = function (event) { //web page is loaded
 
     //try to establish connection with server
-    socket = io('http://localhost:8080');
+    socket = io('http://192.168.1.18:8080');
 
     socket.on('connect', connectionEstablished); //handled when connection established
-    socket.on('message', messageReceived); //handled when message received
+    socket.on('data available', dataAvailable); //handled when data is available
     socket.on('credentials accepted', credentialsAccepted); //handled when server accepts user credentials
+    socket.on('credentials refused', credentialsRefused); //handled when server refuses user credentials
     socket.on('disconnect', connectionAborted); //handled when connection aborted
 };

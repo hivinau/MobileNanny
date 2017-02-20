@@ -9,11 +9,12 @@
 
   "dependencies": {
 
-    "express": "~4.12.4",
-    "ejs": "~2.5.5",
-    "xml2js": "0.4.17",
-    "socket.io": "1.7.3",
-    "body-parser": "1.16.1"
+    "express": "4.12.x",
+    "ejs": "2.5.x",
+    "xml2js": "0.4.x",
+    "socket.io": "1.7.x",
+    "body-parser": "1.16.x",
+    "mongodb": "2.2.x"
   },
 
   "author": "Hivinau GRAFFE",

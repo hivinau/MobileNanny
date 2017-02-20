@@ -7,6 +7,12 @@ var path = require('path');
 //middleware to load resources from xml parser (string, integer, ...)
 var resources = require(path.join(__dirname, '/parsers/resources'));
 
+var statusCodes = {
+
+    USER_ADD_FAILED: 520,
+    PHONES_LISTING_FAILED: 521
+};
+
 //default route: show index.ejs
 router.get('/', function (request, response) {
 
@@ -18,26 +24,70 @@ router.get('/', function (request, response) {
 
 });
 
+router.post('/users/add/', function (request, response) {
+
+    resources.getString('add_user', function(err, value) {
+
+        console.log(value);
+    });
+
+    if(request.body.email && request.body.password) {
+
+        var credentialsManager = require(path.join(__dirname, '/database-managers/credentials-manager.js'));
+
+        credentialsManager.add(request.body.email, request.body.password, function (error, results) {
+
+            if(error) {
+
+                console.log(error);
+
+                response.statusCode = statusCodes.USER_ADD_FAILED;
+                response.send({ error: error });
+
+            } else {
+
+                console.log(results);
+                response.send({ result: results });
+            }
+        });
+    } else {
+
+        resources.getString('user_add_failed', function(err, value) {
+
+            console.log(value);
+
+            response.statusCode = statusCodes.USER_ADD_FAILED;
+            response.send({ error: value });
+        });
+    }
+});
+
 router.post('/phones/', function (request, response) {
 
-    console.log('try to retrieve all phones depending user credentials');
+    resources.getString('retrieve_phones', function(err, value) {
+
+        console.log(value);
+    });
 
     if(request.body.email == 'hivinau.graffe@hotmail.fr' && request.body.password == 'test') {
 
+        resources.getString('retrieve_phones_succeed', function(err, value) {
 
-        console.log('phones registered by ' + request.body.email + ' are listed');
+            console.log(value, request.body.email);
+        });
 
         var phones = [ { type: 'android' } ];
         response.render(path.join(__dirname, '/views/fragments/phones.ejs'), { phones: phones });
 
     } else {
 
-        var error = 'unable to authenticate user with specified credentials';
+        resources.getString('retrieve_phones_failed', function(err, value) {
 
-        console.log(error);
+            console.log(value);
 
-        response.statusCode = 522;
-        response.send({ error: error });
+            response.statusCode = statusCodes.PHONES_LISTING_FAILED;
+            response.send({ error: value });
+        });
     }
 });
 

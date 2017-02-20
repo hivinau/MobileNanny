@@ -1,53 +1,26 @@
 //middleware to use HTTP server/client
 var http = require('http');
 
+//middleware to format url basename
+var path = require('path');
+
 //load server with app as listener
-var server = http.createServer(require('../app'));
+var server = http.createServer(require(path.join(__dirname, '../app.js')));
 
-var io = require('socket.io')(server);
+//establish socket server
+var serverSocket = require(path.join(__dirname, '../security/server-socket.js'));
+serverSocket(server);
 
-io.on('connection', function(socket) {
-
-    console.log('socket connected');
-
-    socket.on('authentication', function (credentials) {
-
-        console.log('authenticating \'' + socket.id + '\'...');
-
-        if(credentials.hasOwnProperty('email') && credentials.hasOwnProperty('password')) {
-
-            socket.email = credentials.email;
-            socket.password = credentials.password;
-
-            console.log('\'' + socket.id + '\' authenticated');
-            socket.emit('credentials accepted');
-
-        } else {
-
-            var message = {
-
-                type: 'error',
-                content: 'authentication failed'
-            };
-
-            socket.emit('message', message);
-        }
-    });
-
-    socket.on('event', function() {
-
-        console.log('socket event occured');
-    });
-
-    socket.on('disconnect', function() {
-
-        console.log('socket disconnected');
-    });
-});
+//middleware to load resources from xml parser (string, integer, ...)
+var resources = require(path.join(__dirname, '../parsers/resources'));
 
 //server will bind clients on port 8080
 var port = process.env.PORT || 8080;
 server.listen(port, function () {
 
-    console.log('server listening at port %d', port);
+    resources.getString('server_listening_on_port', function(err, value) {
+
+        console.log(value, port);
+    });
+
 });

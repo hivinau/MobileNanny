@@ -14,7 +14,5 @@ function request(method, url, parameters, response) {
         }
     };
 
-    console.log(parameters);
-
     request.send(parameters);
 }

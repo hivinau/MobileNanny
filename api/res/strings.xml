@@ -3,5 +3,18 @@
 <resources>
 
     <string name="app_name">Mobile Nanny</string>
+    <string name="server_listening_on_port">server listening at port %d</string>
+    <string name="socket_connected">socket connected</string>
+    <string name="socket_disconnected">socket disconnected</string>
+    <string name="authenticating">authenticating '%s'...</string>
+    <string name="authentication_failed">authentication failed</string>
+    <string name="authentication_succeed">'%s' authenticated</string>
+    <string name="retrieve_phones">try to retrieve all phones depending user credentials</string>
+    <string name="add_user">try to add user credentials</string>
+    <string name="retrieve_phones_succeed">phones registered by %s are listed</string>
+    <string name="retrieve_phones_failed">there is no phone related to credentials</string>
+    <string name="user_add_succeed">user registration succeed</string>
+    <string name="user_add_failed">user registration failed</string>
+    <string name="credentials_existed">credentials already used</string>
 
 </resources>
