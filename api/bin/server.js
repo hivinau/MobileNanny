@@ -18,7 +18,7 @@ var resources = require(path.join(__dirname, '../parsers/resources'));
 var port = process.env.PORT || 8080;
 server.listen(port, function () {
 
-    resources.getString('server_listening_on_port', function(err, value) {
+    resources.stringValueOf('server_listening_on_port', function(err, value) {
 
         console.log(value, port);
     });

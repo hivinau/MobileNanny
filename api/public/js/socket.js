@@ -35,7 +35,7 @@ var credentialsAccepted = function () {
     console.log('ask server to list phones registered');
 
     var parameters = JSON.stringify({ email: credentials.email, password: credentials.password });
-    request('POST', '/phones/', parameters, function (event) { //handle XHR request to retrieve phones
+    request('POST', '/phones/list/', parameters, function (event) { //handle XHR request to retrieve phones
 
         var response = event.target.response;
 

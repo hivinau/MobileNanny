@@ -1,32 +1,32 @@
-var resources = {
+var resources = module.exports  = {};
 
-    getString: function(tag, callback) {
+//middleware to read file
+var fs = require('fs');
 
-        var fs = require('fs');
-        var xml2js = require('xml2js');
+//middleware to parse xml content
+var xml2js = require('xml2js');
 
-        var parser = new xml2js.Parser();
+resources.stringValueOf = function(tag, callback) {
 
-        var file = fs.readFileSync('./res/strings.xml', 'utf8');
-        parser.parseString(file, function (err, result) {
+    var file = fs.readFileSync('./res/strings.xml', 'utf8');
 
-            var strings = result.resources.string;
+    var parser = new xml2js.Parser();
+    parser.parseString(file, function (err, result) {
 
-            var value = '';
+        var strings = result.resources.string;
 
-            for(var i = 0; i < strings.length; i++) {
+        var value = '';
 
-                if(strings[i]['$']['name'] == tag) {
+        for(var i = 0; i < strings.length; i++) {
 
-                    value = strings[i]['_'];
+            if(strings[i]['$']['name'] == tag) {
 
-                    break;
-                }
+                value = strings[i]['_'];
+
+                break;
             }
+        }
 
-            callback(err, value);
-        });
-    }
+        callback(err, value);
+    });
 };
-
-module.exports = resources;

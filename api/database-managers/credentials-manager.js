@@ -7,83 +7,79 @@ var path = require('path');
 //middleware to load resources from xml parser (string, integer, ...)
 var resources = require(path.join(__dirname, '../parsers/resources'));
 
-var database = 'mongodb://localhost/mobile-nanny-database';
-var collectionName = 'users';
+var config = require('../security/config.js');
 
-var credentialsManager = {
+var credentialsManager = module.exports = {};
 
-    add: function (email, password, callback) {
+credentialsManager.add = function (email, password, callback) {
 
-        credentialsManager.list(function (error, items) {
+    credentialsManager.list(function (error, items) {
 
-            var exists = false;
+        var exists = false;
 
-            if(items) {
+        if(items) {
 
-                items.forEach(function (item, index) {
+            items.forEach(function (item, index) {
 
-                    if(item.email == email && item.password == password) {
+                if(item.email == email && item.password == password) {
 
-                        exists = true;
-                    }
-                });
-            }
+                    exists = true;
+                }
+            });
+        }
 
-            if(exists) {
+        if(exists) {
 
-                resources.getString('credentials_existed', function(err, value) {
+            resources.stringValueOf('credentials_existed', function(err, value) {
 
-                    callback(value, null);
-                });
+                callback(value, null);
+            });
 
-            } else {
+        } else {
 
-                databaseClient.connect(database, function(error, db) {
+            databaseClient.connect(config.mongo.uri + config.mongo.db.name, function(error, db) {
 
-                    if(error == null) {
+                if(error == null) {
 
-                        db.collection(collectionName, function(error, collection) {
+                    db.collection(config.mongo.db.collections.users, function(error, collection) {
 
-                            collection.insert({ email: email,  password: password });
+                        collection.insert({ email: email,  password: password });
 
-                            resources.getString('user_add_succeed', function(err, value) {
+                        resources.stringValueOf('user_add_succeed', function(err, value) {
 
-                                callback(null, value);
-                            });
-
+                            callback(null, value);
                         });
 
-                    } else {
-
-                        callback(error, null);
-                    }
-                });
-            }
-        });
-
-    },
-
-    list: function(callback) {
-
-        databaseClient.connect(database, function(error, db) {
-
-            if(error == null) {
-
-                db.collection(collectionName, function(error, collection) {
-
-                    collection.find().toArray(function(err, items) {
-
-                        callback(null, items);
                     });
 
-                });
+                } else {
 
-            } else {
+                    callback(error, null);
+                }
+            });
+        }
+    });
 
-                callback(error, null);
-            }
-        });
-    }
 };
 
-module.exports = credentialsManager;
+credentialsManager.list = function(callback) {
+
+    databaseClient.connect(config.mongo.uri + config.mongo.db.name, function(error, db) {
+
+        if(error == null) {
+
+            db.collection(config.mongo.db.collections.users, function(error, collection) {
+
+                collection.find().toArray(function(err, items) {
+
+                    callback(null, items);
+                });
+
+            });
+
+        } else {
+
+            callback(error, null);
+        }
+    });
+};

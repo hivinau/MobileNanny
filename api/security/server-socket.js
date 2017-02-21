@@ -4,20 +4,20 @@ var path = require('path');
 //middleware to load resources from xml parser (string, integer, ...)
 var resources = require(path.join(__dirname, '../parsers/resources'));
 
-var serverSocket = function (server) {
+module.exports = function (server) {
 
     var io = require('socket.io')(server);
 
     io.on('connection', function(socket) {
 
-        resources.getString('socket_connected', function(err, value) {
+        resources.stringValueOf('socket_connected', function(err, value) {
 
             console.log(value);
         });
 
         socket.on('authentication', function (credentials) {
 
-            resources.getString('authenticating', function(err, value) {
+            resources.stringValueOf('authenticating', function(err, value) {
 
                 console.log(value, socket.id);
             });
@@ -30,7 +30,7 @@ var serverSocket = function (server) {
 
                     if(error) {
 
-                        resources.getString('authentication_failed', function(err, value) {
+                        resources.stringValueOf('authentication_failed', function(err, value) {
 
                             console.log(value);
                             socket.emit('credentials refused', value);
@@ -50,7 +50,7 @@ var serverSocket = function (server) {
 
                         if(exists) {
 
-                            resources.getString('authentication_succeed', function(err, value) {
+                            resources.stringValueOf('authentication_succeed', function(err, value) {
 
                                 console.log(value, socket.id);
                                 socket.emit('credentials accepted');
@@ -58,7 +58,7 @@ var serverSocket = function (server) {
 
                         } else {
 
-                            resources.getString('authentication_failed', function(err, value) {
+                            resources.stringValueOf('authentication_failed', function(err, value) {
 
                                 console.log(value);
                                 socket.emit('credentials refused', value);
@@ -69,7 +69,7 @@ var serverSocket = function (server) {
 
             } else {
 
-                resources.getString('authentication_failed', function(err, value) {
+                resources.stringValueOf('authentication_failed', function(err, value) {
 
                     console.log(value);
                     socket.emit('credentials refused', value);
@@ -79,7 +79,7 @@ var serverSocket = function (server) {
 
         socket.on('disconnect', function() {
 
-            resources.getString('socket_disconnected', function(err, value) {
+            resources.stringValueOf('socket_disconnected', function(err, value) {
 
                 console.log(value);
             });
@@ -87,5 +87,3 @@ var serverSocket = function (server) {
 
     });
 };
-
-module.exports = serverSocket;

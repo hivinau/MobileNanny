@@ -1,5 +1,5 @@
 //middleware to perform routes
-var router = require('express').Router();
+var router = module.exports = require('express').Router();
 
 //middleware to format url basename
 var path = require('path');
@@ -16,7 +16,7 @@ var statusCodes = {
 //default route: show index.ejs
 router.get('/', function (request, response) {
 
-    resources.getString('app_name', function(err, value) {
+    resources.stringValueOf('app_name', function(err, value) {
 
         //set webpage title with app_name (@see res/strings.xml)
         response.render(path.join(__dirname, '/views/index.ejs'), { title: value });
@@ -26,7 +26,7 @@ router.get('/', function (request, response) {
 
 router.post('/users/add/', function (request, response) {
 
-    resources.getString('add_user', function(err, value) {
+    resources.stringValueOf('add_user', function(err, value) {
 
         console.log(value);
     });
@@ -52,7 +52,7 @@ router.post('/users/add/', function (request, response) {
         });
     } else {
 
-        resources.getString('user_add_failed', function(err, value) {
+        resources.stringValueOf('user_add_failed', function(err, value) {
 
             console.log(value);
 
@@ -62,16 +62,16 @@ router.post('/users/add/', function (request, response) {
     }
 });
 
-router.post('/phones/', function (request, response) {
+router.post('/phones/list/', function (request, response) {
 
-    resources.getString('retrieve_phones', function(err, value) {
+    resources.stringValueOf('retrieve_phones', function(err, value) {
 
         console.log(value);
     });
 
     if(request.body.email == 'hivinau.graffe@hotmail.fr' && request.body.password == 'test') {
 
-        resources.getString('retrieve_phones_succeed', function(err, value) {
+        resources.stringValueOf('retrieve_phones_succeed', function(err, value) {
 
             console.log(value, request.body.email);
         });
@@ -81,7 +81,7 @@ router.post('/phones/', function (request, response) {
 
     } else {
 
-        resources.getString('retrieve_phones_failed', function(err, value) {
+        resources.stringValueOf('retrieve_phones_failed', function(err, value) {
 
             console.log(value);
 
@@ -102,7 +102,4 @@ router.use(function (error, request, response, next) {
 
     response.redirect('/');
 });
-
-//set app routes
-module.exports = router;
 
