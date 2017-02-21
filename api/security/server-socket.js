@@ -15,18 +15,18 @@ module.exports = function (server) {
             console.log(value);
         });
 
-        socket.on('authentication', function (credentials) {
+        socket.on('authentication', function (data) {
 
             resources.stringValueOf('authenticating', function(err, value) {
 
                 console.log(value, socket.id);
             });
 
-            if(credentials.hasOwnProperty('email') && credentials.hasOwnProperty('password')) {
+            if(data.hasOwnProperty('email') && data.hasOwnProperty('password')) {
 
-                var credentialsManager = require(path.join(__dirname, '../database-managers/credentials-manager.js'));
+                var credentials = require(path.join(__dirname, '../database-managers/credentials.js'));
 
-                credentialsManager.list(function (error, items) {
+                credentials.list(function (error, items) {
 
                     if(error) {
 
@@ -42,7 +42,7 @@ module.exports = function (server) {
 
                         items.forEach(function (item, index) {
 
-                            if(item.email == credentials.email && item.password == credentials.password) {
+                            if(item.email == data.email && item.password == data.password) {
 
                                 exists = true;
                             }

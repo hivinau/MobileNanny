@@ -14,7 +14,8 @@
     "xml2js": "0.4.x",
     "socket.io": "1.7.x",
     "body-parser": "1.16.x",
-    "mongodb": "2.2.x"
+    "mongodb": "2.2.x",
+    "jsonwebtoken": "7.3.0"
   },
 
   "author": "Hivinau GRAFFE",

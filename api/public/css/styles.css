@@ -51,7 +51,7 @@ nav {
     justify-content: center;
     align-content: center;
     background: #1e90ff;
-    height: 80px;
+    height: 10%;
 }
 
 nav div {
@@ -80,11 +80,10 @@ ul#phones {
 
     position: absolute;
     left: 0;
-    top: 80px;
     margin: 0;
     padding: 0;
     width: 320px;
-    height: 100%;
+    height: 90%;
     list-style-type: none;
     overflow: auto;
 }
@@ -119,13 +118,12 @@ ul#phones > li:hover {
 
     #controls-panel {
 
-        margin-top: 100px;
+        margin-top: 50%;
         width: 100%;
     }
 
     ul#phones {
 
-        top: 180px;
         width: 100%;
     }
 }
