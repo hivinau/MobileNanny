@@ -94,7 +94,7 @@ module.exports = {
 
                         console.log(value);
 
-                        response.statusCode = config.statusCode.removing_phone_failed;
+                        response.statusCode = config.statusCode.listing_locations_failed;
                         response.send({ 'error': value });
                     });
                 }
@@ -106,7 +106,7 @@ module.exports = {
 
                 console.log(value);
 
-                response.statusCode = config.statusCode.removing_phone_failed;
+                response.statusCode = config.statusCode.listing_locations_failed;
                 response.send({ 'error': value });
             });
         }

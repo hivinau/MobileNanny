@@ -41,8 +41,7 @@ var dataAvailable = function (data) {
 
         if(data.location.hasOwnProperty('latitude') && data.location.hasOwnProperty('longitude')) {
 
-            socket.tracks.push({'latitude': data.location.latitude, 'longitude': data.location.longitude});
-            var polyline = drawPolyline(document.getElementById('map'), socket.tracks);
+
         }
     }
 };
@@ -114,7 +113,20 @@ function listLocationsWith(token) {
 
         if(response != null) {
 
-            console.log(response);
+            try {
+
+                var json = JSON.parse(response);
+
+                if(json.hasOwnProperty('locations')) {
+
+                    var locations = json.locations;
+
+                    drawPolyline(locations);
+                    centerAndZoom(locations);
+                }
+            }
+            catch(exception) {}
+
         }
     })
 }
