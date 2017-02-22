@@ -18,8 +18,9 @@ public class HttpClient implements IHttpClient, Runnable {
     private final Context context;
     private final String url;
     private final int requestMethod;
-    private final Map<String, String> parameters;
     private final Map<String, String> headers;
+    private final Map<String, String> parametersMap;
+    private String parametersJson = null;
 
     private HttpClientListener listener = null;
 
@@ -35,7 +36,7 @@ public class HttpClient implements IHttpClient, Runnable {
         this.url = url;
         this.requestMethod = requestMethod;
 
-        parameters = new HashMap<>();
+        parametersMap = new HashMap<>();
         headers = new HashMap<>();
     }
 
@@ -50,7 +51,13 @@ public class HttpClient implements IHttpClient, Runnable {
 
     public HttpClient requestParameter(String key, String value) {
 
-        parameters.put(key, value);
+        parametersMap.put(key, value);
+        return this;
+    }
+
+    public HttpClient requestParameter(String value) {
+
+        parametersJson = value;
         return this;
     }
 
@@ -90,9 +97,9 @@ public class HttpClient implements IHttpClient, Runnable {
 
                 String parametersString = "";
                 final URL url;
-                if(parameters.size() > 0) {
+                if(parametersMap.size() > 0) {
 
-                    for(Map.Entry<String, String> entry: parameters.entrySet()) {
+                    for(Map.Entry<String, String> entry: parametersMap.entrySet()) {
 
                         parametersString += String.format(Locale.FRANCE, "%s=%s&", entry.getKey(), entry.getValue());
                     }
@@ -111,25 +118,43 @@ public class HttpClient implements IHttpClient, Runnable {
                 connection = (HttpURLConnection) url.openConnection();
                 connection.setRequestMethod("GET");
 
+                if(headers.size() > 0) {
+
+                    for(Map.Entry<String, String> entry: headers.entrySet()) {
+
+                        connection.setRequestProperty(entry.getKey(), entry.getValue());
+                    }
+                }
+
             } else {
 
                 Uri.Builder builder = new Uri.Builder();
 
-                if(parameters.size() > 0) {
+                String request = parametersJson;
+                if(parametersMap.size() > 0) {
 
-                    for(Map.Entry<String, String> entry: parameters.entrySet()) {
+                    for(Map.Entry<String, String> entry: parametersMap.entrySet()) {
 
                         builder.appendQueryParameter(entry.getKey(), entry.getValue());
                     }
+
+                    request = builder.build().getEncodedQuery();
                 }
 
-                String request = builder.build().getEncodedQuery();
                 URL url = new URL(host);
 
                 connection = (HttpURLConnection) url.openConnection();
                 connection.setRequestMethod("POST");
                 connection.setDoOutput(true);
                 connection.setChunkedStreamingMode(0);
+
+                if(headers.size() > 0) {
+
+                    for(Map.Entry<String, String> entry: headers.entrySet()) {
+
+                        connection.setRequestProperty(entry.getKey(), entry.getValue());
+                    }
+                }
 
                 OutputStream outputStream = connection.getOutputStream();
                 BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(outputStream));
@@ -141,21 +166,13 @@ public class HttpClient implements IHttpClient, Runnable {
                 outputStream.close();
             }
 
-            if(headers.size() > 0) {
-
-                for(Map.Entry<String, String> entry: headers.entrySet()) {
-
-                    connection.setRequestProperty(entry.getKey(), entry.getValue());
-                }
-            }
-
             connection.setConnectTimeout(REQUEST_TIMEOUT * 1000);
             connection.setReadTimeout(REQUEST_TIMEOUT * 1000);
 
             int responseCode = connection.getResponseCode();
 
             final InputStream inputStream;
-            if(responseCode == HttpURLConnection.HTTP_BAD_REQUEST) {
+            if(responseCode != HttpURLConnection.HTTP_OK) {
 
                 inputStream = connection.getErrorStream();
             } else {

@@ -16,6 +16,10 @@
     <string name="retrieve_phones_succeed">%d phones registered by %s are listed</string>
     <string name="retrieve_phones_failed">there is no phone related to credentials</string>
 
+    <string name="retrieve_locations">try to retrieve all locations depending token</string>
+    <string name="retrieve_locations_succeed">%d locations registered by token %s are listed</string>
+    <string name="retrieve_locations_failed">there is no locations related to token</string>
+
     <string name="add_user">try to add user credentials</string>
     <string name="user_add_succeed">user registration succeed</string>
     <string name="user_add_failed">user registration failed</string>
@@ -24,5 +28,13 @@
     <string name="add_phone">try to generate token for phone</string>
     <string name="add_phone_succeed">phone registration succeed. Token generated: %s</string>
     <string name="add_phone_failed">phone registration failed</string>
+
+    <string name="remove_phone">try to remove token of phone</string>
+    <string name="remove_phone_succeed">token deletion succeed.</string>
+    <string name="remove_phone_failed">token deletion failed</string>
+
+    <string name="add_location">try to update location of phone</string>
+    <string name="add_location_succeed">location added</string>
+    <string name="add_location_failed">location can not be added</string>
 
 </resources>

@@ -10,9 +10,10 @@ var server = http.createServer(require(path.join(__dirname, '../app.js')));
 //establish socket server
 var serverSocket = require(path.join(__dirname, '../security/server-socket.js'));
 serverSocket(server);
+serverSocket.start();
 
 //middleware to load resources from xml parser (string, integer, ...)
-var resources = require(path.join(__dirname, '../parsers/resources'));
+var resources = require(path.join(__dirname, '../parsers/resources.js'));
 
 //server will bind clients on port 8080
 var port = process.env.PORT || 8080;

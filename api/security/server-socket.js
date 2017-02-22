@@ -4,9 +4,12 @@ var path = require('path');
 //middleware to load resources from xml parser (string, integer, ...)
 var resources = require(path.join(__dirname, '../parsers/resources'));
 
-module.exports = function (server) {
+var serverSocket = module.exports = function (server) {
 
-    var io = require('socket.io')(server);
+    io = require('socket.io')(server);
+};
+
+serverSocket.start = function () {
 
     io.on('connection', function(socket) {
 
@@ -86,4 +89,9 @@ module.exports = function (server) {
         });
 
     });
+};
+
+serverSocket.emit = function (event, data) {
+
+    io.emit(event, data);
 };

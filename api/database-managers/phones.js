@@ -4,9 +4,6 @@ var databaseClient = require('mongodb').MongoClient;
 //middleware to format url basename
 var path = require('path');
 
-//middleware to load resources from xml parser (string, integer, ...)
-var resources = require(path.join(__dirname, '../parsers/resources'));
-
 //app configuration properties
 var config = require(path.join(__dirname, '../security/config.js'));
 
@@ -34,6 +31,23 @@ phones.add = function(email, callback) {
         } else {
 
             callback(error, null);
+        }
+    });
+};
+
+phones.remove = function(token, callback) {
+
+    databaseClient.connect(config.mongo.uri + config.mongo.db.name, function(error, db) {
+
+        if(error == null) {
+
+            var removed = db.collection(config.mongo.db.collections.phones).remove({ 'token': token });
+
+            callback(removed);
+
+        } else {
+
+            callback(false);
         }
     });
 };
@@ -70,7 +84,7 @@ phones.validatedList = function (email, callback) {
             });
         }
 
-        callback(items);
+        callback(error, items);
     });
 };
 
@@ -80,7 +94,7 @@ phones.list = function (email, callback) {
 
         if(error == null) {
 
-            db.collection(config.mongo.db.collections.phones).find({ email: email }).toArray(function(err, items) {
+            db.collection(config.mongo.db.collections.phones).find({ 'email': email }).toArray(function(err, items) {
 
                 callback(null, items);
             });

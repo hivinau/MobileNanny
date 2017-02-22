@@ -9,7 +9,8 @@ config.token.key = '{ "admin" : "mobile-nanny", "password": "123456" }';
 config.statusCode = {};
 config.statusCode.adding_user_failed = 600;
 config.statusCode.adding_phone_failed = 601;
-config.statusCode.listing_phone_failed = 602;
+config.statusCode.removing_phone_failed = 602;
+config.statusCode.listing_phone_failed = 603;
 
 //mongo database
 config.mongo = {};
@@ -19,3 +20,4 @@ config.mongo.db.name = 'mobile-nanny-database';
 config.mongo.db.collections = {};
 config.mongo.db.collections.users = 'users';
 config.mongo.db.collections.phones = 'phones';
+config.mongo.db.collections.locations = 'locations';

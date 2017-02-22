@@ -1,174 +1,53 @@
+
 function initMap() {
-    var caen = {lat: 49.1846226, lng: -0.4072784};
+
+    var defaultLocation = {lat: 49.1846226, lng: -0.4072784};
     var map = new google.maps.Map(document.getElementById('map'), {
         zoom: 10,
-        center: caen,
+        center: defaultLocation,
         disableDefaultUI: true
     });
 
-    var styles = [
-        {
-            "elementType": "geometry",
-            "stylers": [
-                {
-                    "color": "#ffffff"
-                }
-            ]
-        },
-        {
-            "elementType": "labels.icon",
-            "stylers": [
-                {
-                    "visibility": "off"
-                }
-            ]
-        },
-        {
-            "elementType": "labels.text.fill",
-            "stylers": [
-                {
-                    "color": "#ffffff"
-                }
-            ]
-        },
-        {
-            "elementType": "labels.text.stroke",
-            "stylers": [
-                {
-                    "color": "#212121"
-                }
-            ]
-        },
-        {
-            "featureType": "administrative",
-            "elementType": "geometry",
-            "stylers": [
-                {
-                    "color": "#757575"
-                }
-            ]
-        },
-        {
-            "featureType": "administrative.country",
-            "elementType": "labels.text.fill",
-            "stylers": [
-                {
-                    "color": "#9e9e9e"
-                }
-            ]
-        },
-        {
-            "featureType": "administrative.land_parcel",
-            "stylers": [
-                {
-                    "visibility": "off"
-                }
-            ]
-        },
-        {
-            "featureType": "administrative.locality",
-            "elementType": "labels.text.fill",
-            "stylers": [
-                {
-                    "color": "#bdbdbd"
-                }
-            ]
-        },
-        {
-            "featureType": "poi",
-            "elementType": "labels.text.fill",
-            "stylers": [
-                {
-                    "color": "#757575"
-                }
-            ]
-        },
-        {
-            "featureType": "road",
-            "elementType": "geometry.fill",
-            "stylers": [
-                {
-                    "color": "#BC9873"
-                }
-            ]
-        },
-        {
-            "featureType": "road",
-            "elementType": "labels.text.fill",
-            "stylers": [
-                {
-                    "color": "#BC9873"
-                }
-            ]
-        },
-        {
-            "featureType": "road.arterial",
-            "elementType": "geometry",
-            "stylers": [
-                {
-                    "color": "#BC9873"
-                }
-            ]
-        },
-        {
-            "featureType": "road.highway",
-            "elementType": "geometry",
-            "stylers": [
-                {
-                    "color": "#BC9873"
-                }
-            ]
-        },
-        {
-            "featureType": "road.highway.controlled_access",
-            "elementType": "geometry",
-            "stylers": [
-                {
-                    "color": "#BC9873"
-                }
-            ]
-        },
-        {
-            "featureType": "road.local",
-            "elementType": "labels.text.fill",
-            "stylers": [
-                {
-                    "color": "#BC9873"
-                }
-            ]
-        },
-        {
-            "featureType": "transit",
-            "elementType": "labels.text.fill",
-            "stylers": [
-                {
-                    "color": "#757575"
-                }
-            ]
-        },
-        {
-            "featureType": "water",
-            "elementType": "geometry",
-            "stylers": [
-                {
-                    "color": "#d07000"
-                }
-            ]
-        },
-        {
-            "featureType": "water",
-            "elementType": "labels.text.fill",
-            "stylers": [
-                {
-                    "color": "#3d3d3d"
-                }
-            ]
+    map.setOptions({styles: mapStyles, minZoom: 10});
+
+    //loadGPXFileIntoGoogleMap(map, 'data/gpx.xml');
+}
+
+function drawPolyline(map, tracks) {
+
+    var pointarray = [];
+
+    // process first point
+    var lastlat = tracks[i].latitude;
+    var lastlon = tracks[i].longitude;
+
+    var latlng = new google.maps.LatLng(lastlat,lastlon);
+    pointarray.push(latlng);
+
+    for(var i = 1; i < tracks.length; i++) {
+        var lat = tracks[i].latitude;
+        var lon = tracks[i].longitude;
+
+        // Verify that this is far enough away from the last point to be used.
+        var latdiff = lat - lastlat;
+        var londiff = lon - lastlon;
+
+        if(Math.sqrt(latdiff*latdiff + londiff * londiff) > this.mintrackpointdelta) {
+            lastlon = lon;
+            lastlat = lat;
+
+            latlng = new google.maps.LatLng(lat,lon);
+            pointarray.push(latlng);
         }
-    ];
 
-    map.setOptions({styles: styles, minZoom: 10});
+    }
 
-    loadGPXFileIntoGoogleMap(map, 'data/gpx.xml');
+    return new google.maps.Polyline({
+        path: pointarray,
+        strokeColor: '#ff0000',
+        strokeWeight: 5.0,
+        map: map
+    });
 }
 
 function loadGPXFileIntoGoogleMap(map, filename) {

@@ -50,7 +50,7 @@ nav {
     flex-direction: column;
     justify-content: center;
     align-content: center;
-    background: #1e90ff;
+    background: #037900;
     height: 10%;
 }
 
@@ -93,7 +93,7 @@ ul#phones > li {
     display: block;
     padding: 0;
     margin: 5px;
-    height: 80px;
+    height: 150px;
 
     /* card style */
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
