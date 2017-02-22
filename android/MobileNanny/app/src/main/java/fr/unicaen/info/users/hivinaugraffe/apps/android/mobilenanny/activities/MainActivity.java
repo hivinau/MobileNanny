@@ -56,6 +56,7 @@ public class MainActivity extends AppCompatActivity {
 
             if(locationService != null) {
 
+                locationService.setContext(MainActivity.this);
                 locationService.setRequestEnabled(hasIdentifiant && hasPassword);
             }
         }
@@ -212,11 +213,6 @@ public class MainActivity extends AppCompatActivity {
 
         identifiantEditText.removeTextChangedListener(textWatcher);
         passwordEditText.removeTextChangedListener(textWatcher);
-
-        if(serviceConnectionEstablished) {
-
-            unbindService(connection);
-        }
     }
 
     @Override
@@ -236,6 +232,11 @@ public class MainActivity extends AppCompatActivity {
         }
 
         executor.shutdownNow();
+
+        if(serviceConnectionEstablished) {
+
+            unbindService(connection);
+        }
     }
 
     public void onClick(View view) {

@@ -38,7 +38,8 @@
 
         </activity>
 
-        <service android:name=".services.LocationService"/>
+        <service android:name=".services.LocationService"
+            android:exported="false"/>
 
     </application>
 

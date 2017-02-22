@@ -6,12 +6,15 @@ public class Constant {
 
         public static final String REGISTRATION = "http://192.168.1.18:8080/phones/add/";
         public static final String UNREGISTRATION = "http://192.168.1.18:8080/phones/remove/";
+        public static final String LOCATION = "http://192.168.1.18:8080/locations/add/";
 
         public class Json {
 
             public static final String EMAIL = "email";
             public static final String PASSWORD = "password";
             public static final String TOKEN = "token";
+            public static final String LATITUDE = "latitude";
+            public static final String LONGITUDE = "longitude";
         }
     }
 
