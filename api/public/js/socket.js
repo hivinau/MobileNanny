@@ -37,11 +37,16 @@ var dataAvailable = function (data) {
                 listPhonesWith(credentials.email, credentials.password);
             }
         }
-    } else if(data.hasOwnProperty('location')) {
+    } else if(data.hasOwnProperty('token') && data.hasOwnProperty('location')) {
 
         if(data.location.hasOwnProperty('latitude') && data.location.hasOwnProperty('longitude')) {
 
+            addToPolyline(data.location.latitude, data.location.longitude);
 
+            //update location on item
+            var li = document.getElementById(data.token);
+            var p = li.firstElementChild;
+            p.innerHTML = data.location.latitude + '; ' + data.location.longitude;
         }
     }
 };
@@ -123,6 +128,13 @@ function listLocationsWith(token) {
 
                     drawPolyline(locations);
                     centerAndZoom(locations);
+
+                    //update location on item
+                    var location = locations[locations.length - 1];
+                    var li = document.getElementById(token);
+                    var p = li.firstElementChild;
+                    p.innerHTML = location.latitude + '; ' + location.longitude;
+
                 }
             }
             catch(exception) {}

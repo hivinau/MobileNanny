@@ -17,7 +17,7 @@ function initMap() {
         map: map,
         path: [],
         strokeColor: '#ff0000',
-        strokeWeight: 10.0,
+        strokeWeight: 5.0
     });
 
     //loadGPXFileIntoGoogleMap(map, 'data/gpx.xml');
@@ -25,7 +25,7 @@ function initMap() {
 
 function drawPolyline(locations) {
 
-    var path = polyline.getPath();
+    var path = [];
 
     // process first point
     var lastLatitude = locations[0].latitude;
@@ -57,6 +57,15 @@ function drawPolyline(locations) {
         }
 
     }
+
+    polyline.setPath(path);
+}
+
+function addToPolyline(latitude, longitude) {
+
+    var path = polyline.getPath();
+
+    path.push(new google.maps.LatLng(latitude, longitude));
 
     polyline.setPath(path);
 }

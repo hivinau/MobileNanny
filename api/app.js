@@ -20,4 +20,3 @@ app.use(require(path.join(__dirname, 'routes.js')));
 
 //clients can access to 'public' folder
 app.use('/public', express.static(path.join(__dirname, '/public')));
-app.use('/data/gpx.xml', express.static(path.join(__dirname, '/data/gpx.xml')));

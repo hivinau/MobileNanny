@@ -39,7 +39,8 @@ module.exports = {
                         {
                             'latitude': request.body.latitude,
                             'longitude': request.body.longitude
-                        }
+                        },
+                        'token': request.body.token
                     };
 
                     serverSocket.emit('data available', data);
@@ -83,7 +84,7 @@ module.exports = {
 
                     resources.stringValueOf('retrieve_locations_succeed', function(err, value) {
 
-                        console.log(value);
+                        console.log(value, items[0].tracks.length, request.body.token);
                     });
 
                     response.send({ 'locations': items[0].tracks });

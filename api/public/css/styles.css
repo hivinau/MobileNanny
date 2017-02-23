@@ -109,6 +109,10 @@ ul#phones > li:hover {
     z-index: 3;
 }
 
+ul#phones > li > p {
+
+}
+
 @media screen and (max-width: 680px) {
 
     #ui-container {

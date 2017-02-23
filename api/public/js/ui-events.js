@@ -5,5 +5,6 @@ var onPhoneClick = function (event) {
 
     var token = li.id;
 
+
     listLocationsWith(token);
 };
